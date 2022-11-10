@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title> BattleShip Battle </title>
+
+</head>
+<body>
+
+   <div class = 'text-center'>
+     <h1> BattleShip Game </h1>
+   </div>
+
+<div class="row">
+<div class="container-lg col">
+
+
+    <table class = "center table-fit table-bordered" >
+
+        <thead class = "thead-dark">
+            <tr>
+              <th scope="col">A</th>
+              <th scope="col">B</th>
+              <th scope="col">C</th>
+              <th scope="col">D</th>
+              <th scope="col">E</th>
+              <th scope="col">F</th>
+              <th scope="col">G</th>
+              <th scope="col">H</th>
+              <th scope="col">I</th>
+              <th scope="col">J</th>
+            </tr>
+        </thead>
+        
+        {%for n in range(ocean.shape[0])%}
+
+        {%for r in range(ocean.shape[1])%}
+        
+        <td style="padding-right:20px;">
+            <ul>
+
+                {%if ocean[n][r] in ["a" , "b" , "c" , "d" ,"s" , "x"]%}
+                
+                    <form action = "/call_back/" method = "POST"><button class="btn btn-danger" name = "ship_coords" type = "submit" value="{{ n}} , {{r }} , {{0}}"> {{ocean[n][r]}} </button></form>
+                
+                    {%else%}
+                    <form action = "/call_back/" method = "POST"><button class="btn btn-primary" name = "ship_coords" type = "submit" value="{{ n}} , {{r }}, {{0}}"> {{ocean[n][r]}} </button></form>
+                
+                    
+                {%endif%}
+
+
+            
+            </ul>
+        </td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="container-lg col">
+
+
+    <table class = "center table-fit table-bordered" >
+
+        <thead class = "thead-dark">
+            <tr>
+              <th scope="col">A</th>
+              <th scope="col">B</th>
+              <th scope="col">C</th>
+              <th scope="col">D</th>
+              <th scope="col">E</th>
+              <th scope="col">F</th>
+              <th scope="col">G</th>
+              <th scope="col">H</th>
+              <th scope="col">I</th>
+              <th scope="col">J</th>
+            </tr>
+        </thead>
+        
+        {%for n in range(oppo_ocean.shape[0])%}
+
+        {%for r in range(oppo_ocean.shape[1])%}
+        
+        <td style="padding-right:20px;">
+            <ul>
+                
+                {%if oppo_ocean[n][r] in ["a" , "b" , "c" , "d" ,"s" , "x"]%}
+                
+                    <form action = "/call_back/" method = "POST"><button class="btn btn-danger" name = "ship_coords" type = "submit" value="{{ n}} , {{r }} , {{1}}"> {{oppo_ocean[n][r]}} </button></form>
+                
+                    {%else%}
+                    <form action = "/call_back/" method = "POST"><button class="btn btn-primary" name = "ship_coords" type = "submit" value="{{ n}} , {{r }} , {{1}}"> {{oppo_ocean[n][r]}} </button></form>
+                
+                    
+                {%endif%}
+
+            </ul>
+        </td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+</div>
+    <h3 class="text-md-center">
+
+        Fleet: <br>
+        Aircraft carrier <br>
+        BattleShip <br>
+        Crusier  <br>
+        Destroyer <br>
+        Submarine <br>
+        
+    </h3>
+
+    
+<br>
+    <h2 class = "text-md-center">
+
+        Round: {{rounds}}
+
+        <div style="visibility: {{_visible}};">
+            <h2> Enemy's fleets have been sunk </h2>
+
+            <h2> Winner is {{winner}}</h2>
+        </div>
+    </h2>
+    <br>
+<div name = "bu_table" class=" d-flex flex-row mb-4">
+
+    <div class="p-2 center">
+        <form action = "/refresh/" method="post" name = "refresh">
+            <button name = "refresh" type="submit" class="btn btn-primary">Refreash</button>
+        </form>
+    </div>
+
+    <div class="p-2 center">
+        <form action = "/addFleet/" method="post" name = "addFleets">
+            <button name = "addFleets" type="submit" class="btn btn-success ">Add Fleets</button>
+        </form>
+    </div>
+
+    <div class="p-2 center">
+        <form action = "/sink_fleets/" method="post" name = "sink_fleets">
+            <button name = "sink_fleets" type="submit" class="btn btn-danger ">Sink All Fleets</button>
+        </form>
+    </div>
+
+
+</div>
+<br>
+<br>
+
+</body>
+</html>
